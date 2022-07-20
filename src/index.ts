@@ -1,7 +1,9 @@
 import escapeHtml from "escape-html";
 
-export type Value = null | undefined | string | number | boolean | Promise<string>;
-export type Values = (Value | Value[])[];
+export type NestedArray<T> = Array<T | NestedArray<T>>;
+export type ValueOrNestedArray<T> = T | NestedArray<T>;
+export type Value = ValueOrNestedArray<null | undefined | string | number | boolean | Promise<string>>;
+export type Values = Value[];
 
 const resolveValues = (values: Values): Promise<string[]> =>
   Promise.all(
